@@ -13,7 +13,7 @@ def generate_access_token():
     return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.SESSION_TOKEN_ALGORITHM)
 
 
-async def authenticate(token):
+def authenticate(token):
     """ 
     Check if User is logged in
     """
@@ -25,7 +25,7 @@ async def authenticate(token):
         pass
 
     try:
-        payload = jwt.decode(
+        jwt.decode(
             jwt=token, key=settings.SECRET_KEY, algorithms=settings.SESSION_TOKEN_ALGORITHM)
         return True
     except jwt.ExpiredSignatureError:

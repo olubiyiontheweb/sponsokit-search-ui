@@ -7,7 +7,7 @@ from main import sponsokit_search_ui
 client = TestClient(sponsokit_search_ui)
 
 
-def test_read_main():
+def test_auth_token_generation():
     response = client.get(f"{settings.API_V1_STR}/generate_auth_token",
                           headers={"content-type": "application/json"})
     assert response.status_code == status.HTTP_200_OK
