@@ -6,7 +6,7 @@ Influencer Search - Sponsokit challenge
 ### TODO: Remaining part 
 - Finalize pytest on search endpoints
 - Add pagination
-- complete Readme file (describe the project and write how to setup the file.
+- complete readme file (describe the project and how to set it up).
 - Retest project in docker environment and submit
 
 Run the project with
