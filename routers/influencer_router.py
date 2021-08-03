@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from config.config_loader import settings
 from schema.influencer import InfluencerQuery, InfluencerSchema
 from services.authentication import authenticate
+from services.elasticsearch_query import query_elasticsearch
 
 router = APIRouter()
 
