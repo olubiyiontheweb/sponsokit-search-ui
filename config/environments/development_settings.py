@@ -7,5 +7,8 @@ class Settings(GLOBAL_SETTINGS):
     OPENAPI_URL: str = "/openapi.json"
     DEBUG: bool = True
 
+    # SECRET_KEY: str = secrets.token_urlsafe(32)
+    SECRET_KEY: str = "-MmPYkSksyccaQA7fSChsdDWhRNVVHTdFr41IGm3qD70YARmLg"
+
 
 settings = Settings()
