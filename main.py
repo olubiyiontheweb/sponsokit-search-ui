@@ -1,18 +1,15 @@
-from fastapi import FastAPI, status
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from config.config_loader import settings
+from routers.all_routers import sponsokit_search_routers, sponsokit_search_index_routers
 
 # initialize FastAPI
-sponsok_search_ui = FastAPI(title=settings.PROJECT_NAME,
-                            description=settings.DESCRIPTION,
-                            openapi_url=f"{settings.API_V1_STR + settings.OPENAPI_URL}",
-                            docs_url=f"{settings.API_V1_STR}/docs",
-                            version=settings.VERSION, debug=settings.DEBUG)
+sponsokit_search_ui = FastAPI(title=settings.PROJECT_NAME,
+                              description=settings.DESCRIPTION,
+                              openapi_url=f"{settings.API_V1_STR + settings.OPENAPI_URL}",
+                              docs_url=f"{settings.API_V1_STR}/docs",
+                              version=settings.VERSION, debug=settings.DEBUG)
 
+sponsokit_search_ui.include_router(sponsokit_search_index_routers)
 
-@ sponsok_search_ui.get("/")
-async def root():
-    """ Root route returns simple guide page
-    """
-    return JSONResponse(content=f'{settings.DESCRIPTION} Visit http://localhost:8000/api/v1/docs for more details.',
-                        status_code=status.HTTP_200_OK)
+sponsokit_search_ui.include_router(
+    sponsokit_search_routers, prefix=settings.API_V1_STR)
