@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+    sponsokit_search_api:
+        container_name: sponsokit_search_api
+        image: sponsokit_api_image
+        restart: always
+        command: uvicorn main:malliva_api --host 0.0.0.0 --port 8000 --reload
+        volumes:
+            - .:/app
+        networks:
+            - sponsokit_search_api_net
+        ports:
+            - 8000:8000
+
+networks:
+    mallivaplat_net:
+        driver: bridge
