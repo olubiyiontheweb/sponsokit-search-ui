@@ -4,14 +4,27 @@ services:
         container_name: sponsokit_search_api
         image: sponsokit_api_image
         restart: always
-        command: uvicorn main:malliva_api --host 0.0.0.0 --port 8000 --reload
+        command: uvicorn main:sponsokit_search_ui --host 0.0.0.0 --port 8000 --reload
         volumes:
             - .:/app
         networks:
             - sponsokit_search_api_net
         ports:
             - 8000:8000
+        depends_on: 
+            - sponsokit_search_api_init
+
+    sponsokit_search_api_init:
+        container_name: sponsokit_search_api_init
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: sponsokit_api_image
+        volumes:
+            - .:/app
+        networks: 
+            - sponsokit_search_api_net
 
 networks:
-    mallivaplat_net:
+    sponsokit_search_api_net:
         driver: bridge
