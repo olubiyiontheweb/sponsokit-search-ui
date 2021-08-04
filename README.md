@@ -3,6 +3,8 @@ Influencer Search - Sponsokit challenge
 
 Description: This is a REST API that provides a search endpoint to search over influencers. Influencers are queried from Elasticsearch
 
+Note: You'd need to create an authentication token token and pass it to the search API to search for influencers.
+
 ### TODO: Remaining part 
 - Finalize pytest on search endpoints
 - Add pagination
