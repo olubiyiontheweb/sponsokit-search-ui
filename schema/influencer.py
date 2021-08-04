@@ -18,8 +18,11 @@ class InfluencerQuery(BaseModel):
     """ 
         Partial schema for querying influencers
     """
-    channel_display_name: str = None
-    follower_count: Optional[FollowerCount] = None
+    search_text: str = None
+    follower_count: FollowerCount = {
+        "min_count": 0,
+        "max_count": 10000
+    }
     token: str = None
 
 

@@ -10,5 +10,9 @@ router = APIRouter()
 async def generate_auth_token():
     """ Route returns auth token for authenticating API interaction
     """
-    return JSONResponse(content={"token": f"{generate_access_token()}"},
-                        status_code=status.HTTP_200_OK)
+    try:
+        return JSONResponse(content={"token": f"{generate_access_token()}"},
+                            status_code=status.HTTP_200_OK)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)},
+                            status_code=status.HTTP_400_BAD_REQUEST)

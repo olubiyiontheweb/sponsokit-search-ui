@@ -23,4 +23,5 @@ sponsokit_search_ui.include_router(
 @sponsokit_search_ui.on_event("startup")
 async def startup():
     logger.info("start up tasks running")
+    # nothing here for now
     logger.info("start up tasks finished")
