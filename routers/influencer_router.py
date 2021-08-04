@@ -18,6 +18,10 @@ async def search_influencer(page_no: PositiveInt = 1, token: str = None, search_
 
     Parameters should be sent as url parameters
     """
+    if token is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Authentication token required")
+
     try:
         if authenticate(token):
             influencers = await elastic_search_query.search_influencers(search_text, min_follower_count, max_follower_count, page_no)
@@ -38,6 +42,10 @@ async def search_influencer_with_json(influencer_query: InfluencerQuery, page_no
     Parameters should be sent as json.
     """
     # clean request data
+
+    if influencer_query.token is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Authentication token required")
 
     try:
         influencer_query = influencer_query.dict(
@@ -60,4 +68,4 @@ async def search_influencer_with_json(influencer_query: InfluencerQuery, page_no
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Not authenticated {str(e)}")

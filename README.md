@@ -11,8 +11,15 @@ Note: You'd need to create an authentication token token and pass it to the sear
 
 Pagination is currently set to 10 items per response
 
-### TODO: Remaining part 
-- Finalize pytest on search endpoints
+### Specifications completed
+- Token authentication
+- Responses paginated and serialized
+- Unit test
+- Documentation and Readme
+- Query multisearch from Elastic Search (can take a text input to search 'channel_display_name' and 'biography' and range of values a range input for follower_count)
+- Influencer Search API (with JSON and URL parameter)
+- Docker for quick deployment anywhere
+
 
 #### Run the following commands sequentially to start the project:
 
@@ -32,7 +39,7 @@ Pagination is currently set to 10 items per response
 
     docker-compose up -d
 
-#### Execute all tests with the following commands. All tests files are in the "tests" folder incase you need to run them sequentially
+#### Execute all tests with the following commands. All tests files are in the "tests" folder incase you need to run them sequentially (you will need set an environment variable SPONSOKIT_ENVIRONMENT='TEST' if you're not using the script)
 
     python run_tests.py
 

@@ -2,7 +2,6 @@ import logging
 from fastapi import FastAPI
 from config.config_loader import settings
 from routers.all_routers import sponsokit_search_routers, sponsokit_search_index_routers
-from services.elasticsearch_query import elastic_search_query
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

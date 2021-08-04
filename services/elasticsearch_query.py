@@ -20,13 +20,17 @@ class ElasticSearchQuery:
 
     async def search_influencers(self, search_text, min_follower_count, max_follower_count, page_no):
         s = Search(using=self.client)
+        # query search text and range values
         s.query("multi_match", query=search_text, fields=["channel_display_name", "biography"]).filter(
             "range", follower_count={"gte": min_follower_count, "lte": max_follower_count})
 
+        # paginating values
+        s[settings.ELASTICSEARCH_PAGE_SIZE *
+          (page_no - 1):settings.ELASTICSEARCH_PAGE_SIZE * page_no]
+
         response = s.execute()
 
-        response = [x.to_dict() for x in response.hits[settings.ELASTICSEARCH_PAGE_SIZE *
-                                                       (page_no - 1):settings.ELASTICSEARCH_PAGE_SIZE * page_no]]
+        response = [x.to_dict() for x in response]
         return response
 
 

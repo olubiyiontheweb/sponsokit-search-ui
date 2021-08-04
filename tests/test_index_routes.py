@@ -10,10 +10,9 @@ def test_index_route():
     """
     Test the index route. 
     """
-    response = client.get("/", headers={"content-type": "application/json"})
+    response = client.get("/")
     assert response.status_code == status.HTTP_200_OK
-    assert response.json(
-    ) == f"{settings.DESCRIPTION} Visit /api/v1/docs for more details."
+    assert response.raw != None
 
 
 def test_unknown_routes():

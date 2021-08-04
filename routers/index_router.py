@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status
-from fastapi.responses import JSONResponse
+from starlette.responses import HTMLResponse
 from config.config_loader import settings
 
 router = APIRouter()
@@ -9,8 +9,11 @@ router = APIRouter()
 async def root():
     """ Root route returns simple guide page
     """
+    html_content = """
+    <a href="/api/v1/docs">/api/v1/docs</a>
+    """
     try:
-        return JSONResponse(content=f"{settings.DESCRIPTION} Visit /api/v1/docs for more details.",
+        return HTMLResponse(content=f"{settings.DESCRIPTION} Visit {html_content} for more details.",
                             status_code=status.HTTP_200_OK)
     except Exception as e:
         return JSONResponse(content=e, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
