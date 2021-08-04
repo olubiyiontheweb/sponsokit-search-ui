@@ -39,6 +39,10 @@ Pagination is currently set to 10 items per response
 
     docker-compose up -d
 
+or run the command below to rebuild container
+
+    docker-compose up -d --build
+
 #### Execute all tests with the following commands. All tests files are in the "tests" folder incase you need to run them sequentially (you will need set an environment variable SPONSOKIT_ENVIRONMENT='TEST' if you're not using the script)
 
     python run_tests.py
