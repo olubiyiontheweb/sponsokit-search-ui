@@ -4,7 +4,7 @@ services:
         container_name: sponsokit_search_api
         image: sponsokit_api_image
         restart: always
-        command: uvicorn main:sponsokit_search_ui --host 0.0.0.0 --port 8000 --reload
+        command: uvicorn main:sponsokit_search_ui --host 0.0.0.0 --port 8000
         volumes:
             - .:/app
         networks:
@@ -20,6 +20,7 @@ services:
             context: .
             dockerfile: Dockerfile
         image: sponsokit_api_image
+        command: python run_tests.py
         volumes:
             - .:/app
         networks: 

@@ -9,7 +9,7 @@ from services.elasticsearch_query import elastic_search_query
 router = APIRouter()
 
 
-@ router.get("/search", response_model=InfluencerSchema, status_code=status.HTTP_200_OK)
+@ router.post("/search", response_model=InfluencerSchema)
 async def search_influencer(channel_display_name: str, min_follower_count: int = 0, max_follower_count: int = 10000, token: str = None):
     """ 
     Search and filter a list of influencers with this endpoint.
@@ -25,7 +25,7 @@ async def search_influencer(channel_display_name: str, min_follower_count: int =
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
 
 
-@ router.get("/search_with_json", response_model=InfluencerSchema, status_code=status.HTTP_200_OK)
+@ router.post("/search_with_json", response_model=InfluencerSchema)
 async def search_influencer_with_json(influencer_query: InfluencerQuery):
     """ 
     Search and filter a list of influencers with this endpoint.
@@ -33,8 +33,8 @@ async def search_influencer_with_json(influencer_query: InfluencerQuery):
     """
     if authenticate(influencer_query.token):
         influencers = await elastic_search_query.search_influencers(influencer_query.channel_display_name,
-                                                                    influencer_query.min_follower_count,
-                                                                    influencer_query.max_follower_count)
+                                                                    influencer_query.follower_count.min_count,
+                                                                    influencer_query.follower_count.max_count)
         return JSONResponse(content=influencers,
                             status_code=status.HTTP_200_OK)
     else:

@@ -11,4 +11,4 @@ def test_auth_token_generation():
     response = client.get(f"{settings.API_V1_STR}/generate_auth_token",
                           headers={"content-type": "application/json"})
     assert response.status_code == status.HTTP_200_OK
-    assert response.json() != None
+    assert response.json()["token"] != None

@@ -8,7 +8,7 @@ class Settings(GLOBAL_SETTINGS):
     DEBUG: bool = True
 
     # SECRET_KEY: str = secrets.token_urlsafe(32)
-    SECRET_KEY: str = "-MmPYkSksyccaQA7fSChsdDWhRNVVHTdFr41IGm3qD70YARmLg"
+    SECRET_KEY: str = "xzMCy4IPl8WQAJkDK69QHRlgUu-kmk_rEFmGSDTKpCw"
 
 
 settings = Settings()

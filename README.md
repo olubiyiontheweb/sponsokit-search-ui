@@ -1,15 +1,13 @@
 # sponsokit-search-ui
 Influencer Search - Sponsokit challenge
 
-### TODO: Reorganize and describe api in readme
+Description: This is a REST API that provides a search endpoint to search over influencers. Influencers are queried from Elasticsearch
 
 ### TODO: Remaining part 
 - Finalize pytest on search endpoints
 - Add pagination
-- complete readme file (describe the project and how to set it up).
-- Retest project in docker environment and submit
 
-#### Run the project with
+#### Run the following commands sequentially to start the project:
 
     git clone https://github.com/olubiyiontheweb/sponsokit-search-ui.git
 
@@ -23,8 +21,12 @@ Influencer Search - Sponsokit challenge
 
     uvicorn main:sponsokit_search_ui --host 0.0.0.0 --port 8000 --reload
 
-#### Run the project on Docker with 
+#### Run the project on Docker with:
 
     docker-compose up -d
+
+#### Execute all tests with the following commands. All tests files are in the "tests" folder incase you need to run them sequentially
+
+    python run_tests.py
 
 Visit http://localhost:8000/api/v1/docs to access API documentation
