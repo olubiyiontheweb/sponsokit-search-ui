@@ -3,11 +3,16 @@ Influencer Search - Sponsokit challenge
 
 Description: This is a REST API that provides a search endpoint to search over influencers. Influencers are queried from Elasticsearch
 
+Influencers can be searched using any of the two endpoints available depending on preference.
+- The first endpoint sends parameters as URL parameters
+- The second endpoint sends parameters in JSON format.
+
 Note: You'd need to create an authentication token token and pass it to the search API to search for influencers.
+
+Pagination is currently set to 10 items per response
 
 ### TODO: Remaining part 
 - Finalize pytest on search endpoints
-- Add pagination - Create a function to manage paginations efectively
 
 #### Run the following commands sequentially to start the project:
 
@@ -21,7 +26,7 @@ Note: You'd need to create an authentication token token and pass it to the sear
 
     pip install -r .\requirements.txt
 
-    uvicorn main:sponsokit_search_ui --host 0.0.0.0 --port 8000 --reload
+    uvicorn main:sponsokit_search_ui --host 0.0.0.0 --port 8000
 
 #### Run the project on Docker with:
 
