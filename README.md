@@ -7,7 +7,7 @@ Note: You'd need to create an authentication token token and pass it to the sear
 
 ### TODO: Remaining part 
 - Finalize pytest on search endpoints
-- Add pagination
+- Add pagination - Create a function to manage paginations efectively
 
 #### Run the following commands sequentially to start the project:
 
