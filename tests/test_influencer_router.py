@@ -43,6 +43,22 @@ def test_influencer_search_route_with_token_and_parameters():
     assert response.json() != None
 
 
+def test_influencer_search_route_max_follower_count():
+
+    response = client.post(f"{settings.API_V1_STR}/search/{page_no}?token={token}&search_text={search_text}&min_follower_count={min_follower_count}&max_follower_count={max_follower_count}",
+                           headers={"content-type": "application/json"})
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()[1]["follower_count"] <= max_follower_count
+
+
+def test_influencer_search_route_min_follower_count():
+
+    response = client.post(f"{settings.API_V1_STR}/search/{page_no}?token={token}&search_text={search_text}&min_follower_count={min_follower_count}&max_follower_count={max_follower_count}",
+                           headers={"content-type": "application/json"})
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()[1]["follower_count"] >= min_follower_count
+
+
 def test_influencer_search_route_with_token_parameters_and_get():
 
     response = client.get(f"{settings.API_V1_STR}/search/{page_no}?token={token}&search_text={search_text}&min_follower_count={min_follower_count}&max_follower_count={max_follower_count}",
