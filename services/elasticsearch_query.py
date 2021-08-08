@@ -22,7 +22,7 @@ class ElasticSearchQuery:
         s = Search(using=self.client)
         # query search text and range values
         s.query("multi_match", query=search_text, fields=["channel_display_name", "biography"]).filter(
-            "range", follower_count={"from": min_follower_count, "to": max_follower_count})
+            "range", follower_count={"gte": min_follower_count, "lte": max_follower_count})
 
         # paginating values
         # s[settings.ELASTICSEARCH_PAGE_SIZE *
