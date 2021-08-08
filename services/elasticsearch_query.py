@@ -25,12 +25,18 @@ class ElasticSearchQuery:
             "range", follower_count={"gte": min_follower_count, "lte": max_follower_count})
 
         # paginating values
-        s[settings.ELASTICSEARCH_PAGE_SIZE *
-          (page_no - 1):settings.ELASTICSEARCH_PAGE_SIZE * page_no]
+        # s[settings.ELASTICSEARCH_PAGE_SIZE *
+        #   (page_no - 1):settings.ELASTICSEARCH_PAGE_SIZE * page_no]
 
-        response = s.execute()
+        # select only fields that are required for influencer query - Pagination
+        response = s[settings.ELASTICSEARCH_PAGE_SIZE *
+                     (page_no - 1):settings.ELASTICSEARCH_PAGE_SIZE * page_no].execute()
 
-        response = [x.to_dict() for x in response]
+        print("page number: {0}, page size: {1}, length: {2}, previous_page: {3}, next_page: {4}".format(
+            page_no, settings.ELASTICSEARCH_PAGE_SIZE, len(response), settings.ELASTICSEARCH_PAGE_SIZE * (page_no - 1), settings.ELASTICSEARCH_PAGE_SIZE * page_no))
+
+        response = [x.to_dict() for x in response.hits]
+
         return response
 
 

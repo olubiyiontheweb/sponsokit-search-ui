@@ -29,7 +29,7 @@ Pagination is currently set to 10 items per response
 
     python -m venv .venv
 
-    .\venv\Scripts\activate
+    .\.venv\Scripts\activate
 
     pip install -r .\requirements.txt
 

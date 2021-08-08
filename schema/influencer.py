@@ -10,7 +10,7 @@ class FollowerCount(BaseModel):
     """
     A follower count
     """
-    min_count: int = 0
+    min_count: int = 1
     max_count: int = 10000
 
 
@@ -18,9 +18,9 @@ class InfluencerQuery(BaseModel):
     """ 
         Partial schema for querying influencers
     """
-    search_text: str = None
+    search_text: str = ""
     follower_count: FollowerCount = {
-        "min_count": 0,
+        "min_count": 1,
         "max_count": 10000
     }
     token: str = None
