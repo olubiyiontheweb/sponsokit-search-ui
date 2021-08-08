@@ -24,7 +24,7 @@ async def search_influencer(page_no: PositiveInt = 1, token: str = None, search_
 
     try:
         if authenticate(token):
-            influencers = await elastic_search_query.search_influencers(search_text, min_follower_count, max_follower_count, page_no)
+            influencers = await elastic_search_query.search_influencers(search_text, page_no, min_follower_count=min_follower_count, max_follower_count=max_follower_count)
             return JSONResponse(content=influencers,
                                 status_code=status.HTTP_200_OK)
         else:
@@ -59,8 +59,10 @@ async def search_influencer_with_json(influencer_query: InfluencerQuery, page_no
     try:
         if authenticate(influencer_query["token"]):
             influencers = await elastic_search_query.search_influencers(influencer_query["search_text"],
-                                                                        influencer_query["follower_count"]["min_count"],
-                                                                        influencer_query["follower_count"]["max_count"], page_no)
+                                                                        page_no,
+                                                                        min_follower_count=influencer_query[
+                                                                            "follower_count"]["min_count"],
+                                                                        max_follower_count=influencer_query["follower_count"]["max_count"])
             return JSONResponse(content=influencers,
                                 status_code=status.HTTP_200_OK)
         else:

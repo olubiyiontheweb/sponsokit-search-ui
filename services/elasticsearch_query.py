@@ -1,8 +1,9 @@
 import logging
 from config.config_loader import settings
-from elasticsearch_dsl import connections, Search
 from fastapi.encoders import jsonable_encoder
 from schema.influencer import InfluencerSchema
+
+from elasticsearch import Elasticsearch, AsyncElasticsearch
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -14,28 +15,41 @@ class ElasticSearchQuery:
     """
 
     def __init__(self):
-        self.client = connections.create_connection(
-            hosts=settings.ELASTICSEARCH_HOSTS, timeout=settings.ELASTICSEARCH_TIMEOUT)
+        self.client = AsyncElasticsearch(
+            hosts=["https://qcfu7ne0hw:d68q5s6a5k@sponsokit-influence--468124831.eu-central-1.bonsaisearch.net"], timeout=settings.ELASTICSEARCH_TIMEOUT)
         logger.info("Connection session initialized")
 
-    async def search_influencers(self, search_text, min_follower_count, max_follower_count, page_no):
-        s = Search(using=self.client)
-        # query search text and range values
-        s.query("multi_match", query=search_text, fields=["channel_display_name", "biography"]).filter(
-            "range", follower_count={"gte": min_follower_count, "lte": max_follower_count})
+    async def search_influencers(self, search_text, page_no, **kwargs):
 
-        # paginating values
-        # s[settings.ELASTICSEARCH_PAGE_SIZE *
-        #   (page_no - 1):settings.ELASTICSEARCH_PAGE_SIZE * page_no]
+        query_body = {
+            "query": {
+                "bool": {
+                    "should": [
+                    ]
+                }
+            },
+            "from": (page_no - 1) * settings.ELASTICSEARCH_PAGE_SIZE,
+            "size": settings.ELASTICSEARCH_PAGE_SIZE
+        }
+
+        if search_text:
+            query_body["query"]["bool"]["should"].append(
+                {"multi_match": {"query": search_text, "fields": ["channel_display_name", "biography"]}})
+
+        if kwargs["min_follower_count"] or kwargs["max_follower_count"]:
+            query_body["query"]["bool"]["should"].append(
+                {"range": {"follower_count": {
+                    "gte": kwargs["min_follower_count"], "lte": kwargs["max_follower_count"]}}}
+            )
 
         # select only fields that are required for influencer query - Pagination
-        response = s[settings.ELASTICSEARCH_PAGE_SIZE *
-                     (page_no - 1):settings.ELASTICSEARCH_PAGE_SIZE * page_no].execute()
+        response = await self.client.search(
+            body=query_body, size=settings.ELASTICSEARCH_PAGE_SIZE)
 
         print("page number: {0}, page size: {1}, length: {2}, previous_page: {3}, next_page: {4}".format(
-            page_no, settings.ELASTICSEARCH_PAGE_SIZE, len(response), settings.ELASTICSEARCH_PAGE_SIZE * (page_no - 1), settings.ELASTICSEARCH_PAGE_SIZE * page_no))
+            page_no, settings.ELASTICSEARCH_PAGE_SIZE, len(response["hits"]["hits"]), settings.ELASTICSEARCH_PAGE_SIZE * (page_no - 1), settings.ELASTICSEARCH_PAGE_SIZE * page_no))
 
-        response = [x.to_dict() for x in response.hits]
+        response = [x["_source"] for x in response["hits"]["hits"]]
 
         return response
 
