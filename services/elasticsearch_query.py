@@ -46,8 +46,8 @@ class ElasticSearchQuery:
         response = await self.client.search(
             body=query_body, size=settings.ELASTICSEARCH_PAGE_SIZE)
 
-        logger.info("page number: {0}, page size: {1}, length: {2}, previous_page: {3}, next_page: {4}".format(
-            page_no, settings.ELASTICSEARCH_PAGE_SIZE, len(response["hits"]["hits"]), settings.ELASTICSEARCH_PAGE_SIZE * (page_no - 1), settings.ELASTICSEARCH_PAGE_SIZE * page_no))
+        logger.info(("page number: {0}, page size: {1}, length: {2}, previous_page: {3}, next_page: {4}".format(
+            page_no, settings.ELASTICSEARCH_PAGE_SIZE, len(response["hits"]["hits"]), settings.ELASTICSEARCH_PAGE_SIZE * (page_no - 1), settings.ELASTICSEARCH_PAGE_SIZE * page_no)))
 
         response = [x["_source"] for x in response["hits"]["hits"]]
 
