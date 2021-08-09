@@ -1,6 +1,8 @@
 # sponsokit-search-ui
 Influencer Search - Sponsokit challenge
 
+###### Update: Hi! I did a second review tonight and switched from "elasticsearch_dsl" to "elasticsearch" library to query Elasticsearch. Search is now dynamic and both text input and range filters now work correctly.
+
 Description: This is a REST API that provides a search endpoint to search over influencers. Influencers are queried from Elasticsearch
 
 Influencers can be searched using any of the two endpoints available depending on preference.

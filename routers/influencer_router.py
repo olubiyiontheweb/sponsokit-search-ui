@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @ router.post("/search/{page_no}", response_model=List[InfluencerSchema])
-async def search_influencer(page_no: PositiveInt = 1, token: str = None, search_text: str = "", min_follower_count: int = 1, max_follower_count: int = 10000):
+async def search_influencer(page_no: PositiveInt = 1, token: str = None, search_text: str = None, min_follower_count: int = 1, max_follower_count: int = 10000):
     """
     Search and filter a list of influencers with this endpoint.
 

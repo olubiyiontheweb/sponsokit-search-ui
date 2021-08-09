@@ -42,11 +42,11 @@ class ElasticSearchQuery:
                     "gte": kwargs["min_follower_count"], "lte": kwargs["max_follower_count"]}}}
             )
 
-        # select only fields that are required for influencer query - Pagination
+        # execute search and return only page size
         response = await self.client.search(
             body=query_body, size=settings.ELASTICSEARCH_PAGE_SIZE)
 
-        print("page number: {0}, page size: {1}, length: {2}, previous_page: {3}, next_page: {4}".format(
+        logger.info("page number: {0}, page size: {1}, length: {2}, previous_page: {3}, next_page: {4}".format(
             page_no, settings.ELASTICSEARCH_PAGE_SIZE, len(response["hits"]["hits"]), settings.ELASTICSEARCH_PAGE_SIZE * (page_no - 1), settings.ELASTICSEARCH_PAGE_SIZE * page_no))
 
         response = [x["_source"] for x in response["hits"]["hits"]]
