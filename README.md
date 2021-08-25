@@ -9,6 +9,8 @@ Influencers can be searched using any of the two endpoints available depending o
 - The first endpoint sends parameters as URL parameters
 - The second endpoint sends parameters in JSON format.
 
+Note: Elasticsearch API url has been removed so this will not work. Contact Sponsokit if you want to try it.
+
 Note: You'd need to create an authentication token token and pass it to the search API to search for influencers.
 
 Pagination is currently set to 10 items per response
